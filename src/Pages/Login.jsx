@@ -1,6 +1,45 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '../Auth/AuthProvider';
+import { useLocation, useNavigate } from 'react-router';
 
 const Login = () => {
+    const { login, loginWithGoogle } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const location = useLocation();
+    const [isLoading, setIsLoading] = useState(false);
+    const handleSignIn = (e) => {
+        e.preventDefault();
+        setIsLoading(true);
+
+        const form = new FormData(e.target);
+       
+        const email = form.get("email");
+        const password = form.get("password");
+
+        login(email, password)
+            .then(() => {
+                setIsLoading(false);
+                navigate(location.state?.from?.pathname || "/");
+            })
+            .catch(() => {
+                setIsLoading(false);
+                toast.error("Login failed. Please check your credentials.");
+            });
+    };
+
+    const handleGoogleLogin = () => {
+        setIsLoading(true);
+        loginWithGoogle()
+            .then(() => {
+                setIsLoading(false);
+                navigate(location.state?.from?.pathname || "/");
+            })
+            .catch(() => {
+                setIsLoading(false);
+                toast.error("Google login failed. Try again later.");
+            });
+    };
+
     return (
 
         <div className="w-full mx-auto rounded-lg border shadow-sm overflow-hidden bg-white border-stone-200 shadow-stone-950/5 max-w-xs">
@@ -12,13 +51,13 @@ const Login = () => {
                     <div className="mb-4 mt-2 space-y-1.5">
                         <label for="email" className="font-sans antialiased text-sm text-stone-800 dark:text-white font-semibold">Email</label>
                         <div className="relative w-full">
-                            <input id="email" placeholder="someone@example.com" type="email" className="w-full aria-disabled:cursor-not-allowed outline-none focus:outline-none text-stone-800 dark:text-white placeholder:text-stone-600/60 ring-transparent border border-stone-200 transition-all ease-in disabled:opacity-50 disabled:pointer-events-none select-none text-sm py-2 px-2.5 ring shadow-sm bg-white rounded-lg duration-100 hover:border-stone-300 hover:ring-none focus:border-stone-400 focus:ring-none peer" />
+                            <input name="email" placeholder="someone@example.com" type="email" className="w-full aria-disabled:cursor-not-allowed outline-none focus:outline-none text-stone-800 dark:text-white placeholder:text-stone-600/60 ring-transparent border border-stone-200 transition-all ease-in disabled:opacity-50 disabled:pointer-events-none select-none text-sm py-2 px-2.5 ring shadow-sm bg-white rounded-lg duration-100 hover:border-stone-300 hover:ring-none focus:border-stone-400 focus:ring-none peer" />
                         </div>
                     </div>
                     <div className="mb-4 space-y-1.5">
                         <label for="password" className="font-sans antialiased text-sm text-stone-800 dark:text-white font-semibold">Password</label>
                         <div className="relative w-full">
-                            <input id="password" placeholder="************" type="password" className="w-full aria-disabled:cursor-not-allowed outline-none focus:outline-none text-stone-800 dark:text-white placeholder:text-stone-600/60 ring-transparent border border-stone-200 transition-all ease-in disabled:opacity-50 disabled:pointer-events-none select-none text-sm py-2 px-2.5 ring shadow-sm bg-white rounded-lg duration-100 hover:border-stone-300 hover:ring-none focus:border-stone-400 focus:ring-none peer" />
+                            <input name="password" placeholder="************" type="password" className="w-full aria-disabled:cursor-not-allowed outline-none focus:outline-none text-stone-800 dark:text-white placeholder:text-stone-600/60 ring-transparent border border-stone-200 transition-all ease-in disabled:opacity-50 disabled:pointer-events-none select-none text-sm py-2 px-2.5 ring shadow-sm bg-white rounded-lg duration-100 hover:border-stone-300 hover:ring-none focus:border-stone-400 focus:ring-none peer" />
                         </div>
                     </div>
                     <label for="remember" className="mb-4 flex items-center gap-2">
@@ -33,7 +72,8 @@ const Login = () => {
                     <button className="inline-flex items-center justify-center border align-middle select-none font-sans font-medium text-center duration-300 ease-in disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed focus:shadow-none text-sm py-2 px-4 shadow-sm hover:shadow-md bg-stone-800 hover:bg-stone-700 relative bg-gradient-to-b from-stone-700 to-stone-800 border-stone-900 text-stone-50 rounded-lg hover:bg-gradient-to-b hover:from-stone-800 hover:to-stone-800 hover:border-stone-900 after:absolute after:inset-0 after:rounded-[inherit] after:box-shadow after:shadow-[inset_0_1px_0px_rgba(255,255,255,0.25),inset_0_-2px_0px_rgba(0,0,0,0.35)] after:pointer-events-none transition antialiased">Sign In</button>
 
                 </form>
-                <button className="inline-flex items-center justify-center border align-middle select-none font-sans font-medium text-center duration-300 ease-in disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed focus:shadow-none text-sm py-2 px-4 shadow-sm hover:shadow-md relative bg-gradient-to-b from-stone-700 to-stone-800 rounded-lg hover:bg-gradient-to-b hover:from-stone-800 hover:to-stone-800 after:absolute after:inset-0 after:rounded-[inherit] after:box-shadow after:shadow-[inset_0_1px_0px_rgba(255,255,255,0.25),inset_0_-2px_0px_rgba(0,0,0,0.35)] after:pointer-events-none transition antialiased border-[#1877F2] bg-[#1877F2] text-white hover:border-[#1877F2] hover:bg-[#1877F2] hover:brightness-110"><svg width="1.5em" height="1.5em" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="currentColor" className="mr-2 h-4 w-4 stroke-2"><path d="M17 2H14C12.6739 2 11.4021 2.52678 10.4645 3.46447C9.52678 4.40215 9 5.67392 9 7V10H6V14H9V22H13V14H16L17 10H13V7C13 6.73478 13.1054 6.48043 13.2929 6.29289C13.4804 6.10536 13.7348 6 14 6H17V2Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg> Continue with Facebook</button>
+                <button onClick={handleGoogleLogin} className="inline-flex items-center justify-center border align-middle select-none font-sans font-medium text-center duration-300 ease-in disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed focus:shadow-none text-sm py-2 px-4 shadow-sm hover:shadow-md relative bg-gradient-to-b from-stone-700 to-stone-800 rounded-lg hover:bg-gradient-to-b hover:from-stone-800 hover:to-stone-800 after:absolute after:inset-0 after:rounded-[inherit] after:box-shadow after:shadow-[inset_0_1px_0px_rgba(255,255,255,0.25),inset_0_-2px_0px_rgba(0,0,0,0.35)] after:pointer-events-none transition antialiased border-[#1877F2] bg-[#1877F2] text-white hover:border-[#1877F2] hover:bg-[#1877F2] hover:brightness-110">
+                    Continue with Google</button>
 
                 <div className="w-full px-3.5 pt-2 pb-3.5 rounded text-center">
                     <small className="font-sans antialiased text-sm my-1 flex items-center justify-center gap-1 text-stone-600">Don't have an account?
@@ -42,7 +82,7 @@ const Login = () => {
                 </div>
             </div>
             <div>
-                
+
             </div>
         </div>
 

@@ -14,6 +14,10 @@ export const router = createBrowserRouter([
                 element: <Home />
             },
             {
+                path: '/find-tutors',
+                element: <Home />
+            },
+            {
                 path: '/login',
                 element: <Login />
             },
