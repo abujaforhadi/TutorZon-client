@@ -31,7 +31,7 @@ const Navbar = () => {
     ];
 
     return (
-        <nav className="sticky top-0 w-full bg-white shadow-lg p-2 border-b z-50">
+        <nav className="sticky top-0  shadow-lg p-2 border-b z-50">
             <div className="max-w-screen-xl mx-auto flex items-center justify-between">
 
                 <NavLink
@@ -62,7 +62,7 @@ const Navbar = () => {
                     <input
                         type="checkbox"
                         className="toggle theme-controller"
-                        value="dark"
+                        value="synthwave"
                     />
                     {user ? (
                         <div className="flex items-center gap-4">
