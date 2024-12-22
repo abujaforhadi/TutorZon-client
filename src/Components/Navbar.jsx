@@ -7,6 +7,7 @@ import { themeChange } from "theme-change";
 const Navbar = () => {
     const { user, logout } = useContext(AuthContext);
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [isDropdownOpen, setDropdownOpen] = useState(false);
     const [isLoggingOut, setIsLoggingOut] = useState(false);
 
     useEffect(() => {
@@ -31,9 +32,8 @@ const Navbar = () => {
     ];
 
     return (
-        <nav className="sticky top-0  shadow-lg p-2 border-b z-50">
+        <nav className="sticky top-0 shadow-lg p-2 border-b z-50 bg-white/80">
             <div className="max-w-screen-xl mx-auto flex items-center justify-between">
-
                 <NavLink
                     to="/"
                     className="text-xl font-bold text-current hover:text-primary"
@@ -65,19 +65,31 @@ const Navbar = () => {
                         value="synthwave"
                     />
                     {user ? (
-                        <div className="flex items-center gap-4">
+                        <div className="relative flex items-center gap-4">
                             <img
                                 src={user.photoURL || "default-avatar-url"}
                                 alt={user.displayName || "User"}
                                 className="h-8 w-8 rounded-full border cursor-pointer"
+                                onClick={() => {
+                                    console.log("Profile image clicked!");
+                                    setDropdownOpen(!isDropdownOpen);
+                                }}
                                 title={user.displayName}
                             />
+
+                            {isDropdownOpen && (
+                                <div className="absolute right-0 mt-2 w-48  shadow-md rounded border">
+                                    <div className="px-4 py-2 text-sm font-semibold text-gray-700">
+                                        {user.displayName || "User"}
+                                    </div>
+                                </div>
+                            )}
                             <button
                                 onClick={handleLogout}
                                 className="text-sm py-1.5 px-3 bg-red-500 text-white rounded hover:bg-red-400"
                                 disabled={isLoggingOut}
                             >
-                                {isLoggingOut ? "Logging out..." : "Logout"}
+                                {isLoggingOut ? "Logout" : "Logout"}
                             </button>
                         </div>
                     ) : (
