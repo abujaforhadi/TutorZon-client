@@ -3,6 +3,8 @@ import MainLayout from "../Layouts/MainLayout";
 import Home from "../Pages/Home";
 import Login from "../Pages/Login";
 import Registration from "../Pages/Registration";
+import AddTutorials from "../Pages/AddTutorials";
+import PrivateRouter from "./PrivateRouter";
 
 export const router = createBrowserRouter([
     {
@@ -24,7 +26,13 @@ export const router = createBrowserRouter([
             {
                 path: '/signup',
                 element: <Registration />
-            }
+            },
+            {
+                path: '/add-tutorials',
+                element: <PrivateRouter> <AddTutorials /></PrivateRouter>
+               
+            },
+
         ]
     },
 ])
