@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 import { useContext } from "react";
 import { AuthContext } from "../Auth/AuthProvider";
 import Swal from "sweetalert2";
+import Loading from "./Loading";
 
 const TutorDetails = () => {
   const { details } = useParams();
@@ -43,7 +44,9 @@ const TutorDetails = () => {
       language: tutor.language,
       price: tutor.price,
       tutorEmail: tutor.userEmail,
-      email: user.email,
+      BookingEmail: user.email,
+      tutorName:tutor.userName,
+      
     };
 
     fetch("http://localhost:3000/bookings", {
@@ -75,7 +78,7 @@ const TutorDetails = () => {
   };
 
   if (!tutor) {
-    return <p>Loading...</p>;
+    return <Loading/>;
   }
 
   return (
