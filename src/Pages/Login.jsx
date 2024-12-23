@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../Auth/AuthProvider';
-import { useLocation, useNavigate } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 
 const Login = () => {
     const { login, loginWithGoogle } = useContext(AuthContext);
@@ -42,7 +42,7 @@ const Login = () => {
 
     return (
 
-        <div className="w-full mx-auto rounded-lg border shadow-sm overflow-hidden bg-white border-stone-200 shadow-stone-950/5 max-w-xs">
+        <div className="my-5 w-full mx-auto rounded-lg border shadow-sm overflow-hidden bg-white border-stone-200 shadow-stone-950/5 max-w-xs">
             <div>
                 <div className="border overflow-hidden bg-stone-800 border-stone-950 shadow-stone-950/25 rounded m-2 grid h-24 place-items-center shadow-none">
                     <span className="font-sans antialiased font-bold text-xl md:text-2xl lg:text-3xl text-stone-50">Sign In</span>
@@ -77,7 +77,7 @@ const Login = () => {
 
                 <div className="w-full px-3.5 pt-2 pb-3.5 rounded text-center">
                     <small className="font-sans antialiased text-sm my-1 flex items-center justify-center gap-1 text-stone-600">Don't have an account?
-                        <a href="#" className="font-sans antialiased text-sm text-stone-500 font-bold">Sign up</a>
+                        <Link to="/signup" className="font-sans antialiased text-sm text-stone-500 font-bold">Sign up</Link>
                     </small>
                 </div>
             </div>
