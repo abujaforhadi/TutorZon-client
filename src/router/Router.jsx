@@ -9,42 +9,35 @@ import FindTutors from "../Pages/FindTutors";
 import TutorDetails from "../Components/TutorDetails";
 
 export const router = createBrowserRouter([
-    {
+  {
+    path: '/',
+    element: <MainLayout />,
+    children: [
+      {
         path: '/',
-        element: <MainLayout/>,
-        children: [
-            {
-                path: '/',
-                element: <Home />
-            },
-            {
-                path: '/find-tutors',
-                element: <FindTutors />
-            },
-            {
-                path: '/login',
-                element: <Login />
-            },
-            {
-                path: '/signup',
-                element: <Registration />
-            },
-            {
-                path: '/add-tutorials',
-                element: <PrivateRouter> <AddTutorials /></PrivateRouter>
-               
-            },
-            {
-                path: '/add-tutorials',
-                element: <PrivateRouter> <TutorDetails /></PrivateRouter>
-               
-            },
-            {
-                path: '/add-tutorials',
-                element: <PrivateRouter> <AddTutorials /></PrivateRouter>
-               
-            },
-
-        ]
-    },
-])
+        element: <Home />,
+      },
+      {
+        path: '/find-tutors',
+        element: <FindTutors />,
+      },
+      {
+        path: '/login',
+        element: <Login />,
+      },
+      {
+        path: '/signup',
+        element: <Registration />,
+      },
+      {
+        path: '/add-tutorials',
+        element: <PrivateRouter><AddTutorials /></PrivateRouter>,
+      },
+      {
+        path: '/tutor/:details',
+        element: <PrivateRouter><TutorDetails /></PrivateRouter>,
+        loader: ({ params }) => fetch(`http://localhost:3000/tutors/${params.details}`),
+      },
+    ],
+  },
+]);

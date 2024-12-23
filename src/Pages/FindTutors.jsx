@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router";
+import { Link } from "react-router"; 
 
 const FindTutors = () => {
   const [tutors, setTutors] = useState([]);
@@ -17,7 +17,7 @@ const FindTutors = () => {
       <h2 className="text-2xl font-bold mb-4 text-center">Find Tutors</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {tutors.map((tutor) => (
-          <div key={tutor.id} className="border p-4 rounded shadow">
+          <div key={tutor._id} className="border p-4 rounded shadow">
             <img
               src={tutor.image}
               alt={tutor.language}
@@ -26,7 +26,7 @@ const FindTutors = () => {
             <h3 className="text-lg font-semibold">{tutor.userName}</h3>
             <p className="text-sm text-gray-600">Language: {tutor.language}</p>
             <p className="text-sm text-gray-600">Review: {tutor.review}</p>
-            <Link to={`/tutor/${tutor.id}`} className="text-blue-500 mt-2 block">
+            <Link to={`/tutor/${tutor._id}`} className="text-blue-500 mt-2 block">
               View Details
             </Link>
           </div>
