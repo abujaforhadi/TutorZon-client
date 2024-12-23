@@ -9,6 +9,8 @@ import FindTutors from "../Pages/FindTutors";
 import TutorDetails from "../Components/TutorDetails";
 import MyBookedTutors from "../Pages/MyBookedTutors";
 import MyTutorials from "../Pages/MyTutorials";
+import Error from "../Pages/Error";
+import UpdateTutorial from "../Pages/UpdateTutorial";
 
 export const router = createBrowserRouter([
   {
@@ -48,6 +50,12 @@ export const router = createBrowserRouter([
         element: <PrivateRouter><TutorDetails /></PrivateRouter>,
         loader: ({ params }) => fetch(`http://localhost:3000/tutor/${params.details}`),
       },
+      {
+        path: '/update-tutor/:details',
+        element: <PrivateRouter><UpdateTutorial /></PrivateRouter>,
+        loader: ({ params }) => fetch(`http://localhost:3000/tutor/${params.details}`),
+      },
     ],
+    errorElement: <Error />
   },
 ]);

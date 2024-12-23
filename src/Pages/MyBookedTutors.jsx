@@ -29,9 +29,21 @@ const MyBookedTutors = () => {
         const currentReview = parseInt(data.review);
         const id = data._id;
 
+        if (data.reviewedBy && data.reviewedBy.includes(user._id)) {
+          Swal.fire({
+            icon: "info",
+            title: "You have already reviewed this tutor!",
+            text: "You can only submit one review.",
+          });
+          return;
+        }
+
         const updatedReview = currentReview !== undefined ? currentReview + 1 : 1;
 
-        const reviewData = { review: updatedReview };
+        const reviewData = { 
+          review: updatedReview,
+          reviewedBy: [...(data.reviewedBy || []), user._id] // Store the user's ID to track their review
+        };
 
         fetch(`http://localhost:3000/tutor/${id}`, {
           method: "PATCH",
@@ -46,7 +58,7 @@ const MyBookedTutors = () => {
               Swal.fire({
                 position: "top-end",
                 icon: "success",
-                title: "Review count updated!",
+                title: "Review submitted!",
                 showConfirmButton: false,
                 timer: 1500,
               });
@@ -59,7 +71,7 @@ const MyBookedTutors = () => {
             } else {
               Swal.fire({
                 icon: "error",
-                title: "Failed to update review",
+                title: "Failed to submit review",
                 text: "Please try again later.",
               });
             }
@@ -101,8 +113,9 @@ const MyBookedTutors = () => {
               <button
                 onClick={() => handleReview(tutor)}
                 className="bg-blue-500 text-white py-1 px-4 rounded mt-2"
+                disabled={tutor.reviewedBy && tutor.reviewedBy.includes(user._id)}
               >
-                Review
+                {tutor.reviewedBy && tutor.reviewedBy.includes(user._id) ? "Reviewed" : "Review"}
               </button>
             </div>
           ))

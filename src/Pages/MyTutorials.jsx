@@ -1,11 +1,116 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../Auth/AuthProvider";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router"; // For navigation after deletion/update
 
 const MyTutorials = () => {
-    return (
-        <div>
-            
-        </div>
-    );
+  const [bookedTutors, setBookedTutors] = useState([]);
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate(); // For navigation after delete/update
+
+  useEffect(() => {
+    if (user) {
+      fetch("http://localhost:3000/find-tutors")
+        .then((res) => res.json())
+        .then((data) => {
+          const filteredTutors = data.filter(
+            (data) => data.userEmail === user.email
+          );
+          setBookedTutors(filteredTutors);
+        })
+        .catch((error) => console.error("Error fetching bookings:", error));
+    }
+  }, [user]);
+
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This tutorial will be permanently deleted.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:3000/My-Tutorials-delete/${id}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then(() => {
+            setBookedTutors(bookedTutors.filter((tutor) => tutor._id !== id));
+            Swal.fire("Deleted!", "Your tutorial has been deleted.", "success");
+          })
+          .catch((error) => {
+            console.error("Error deleting tutor:", error);
+            Swal.fire("Error!", "Failed to delete the tutorial.", "error");
+          });
+      }
+    });
+  };
+
+  const handleUpdate = (id) => {
+    navigate(`/update-tutor/${id}`);
+  };
+
+  return (
+    <div className="p-6 max-w-6xl mx-auto">
+      <h2 className="text-2xl font-bold mb-4 text-center">My Tutorials</h2>
+      <div className="overflow-x-auto">
+        <table className="table-auto w-full">
+          <thead>
+            <tr>
+              <th className="px-4 py-2">Name</th>
+              <th className="px-4 py-2">Image</th>
+              <th className="px-4 py-2">Language</th>
+              <th className="px-4 py-2">Price</th>
+              <th className="px-4 py-2">Description</th>
+              <th className="px-4 py-2">Review</th>
+              <th className="px-4 py-2">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {bookedTutors.length > 0 ? (
+              bookedTutors.map((tutor) => (
+                <tr key={tutor._id}>
+                  <td className="border px-4 py-2">{tutor.tutorName}</td>
+                  <td className="border px-4 py-2">
+                    <img
+                      src={tutor.image}
+                      alt={tutor.tutorName}
+                      className="w-20 h-20 object-cover"
+                    />
+                  </td>
+                  <td className="border px-4 py-2">{tutor.language}</td>
+                  <td className="border px-4 py-2">${tutor.price}</td>
+                  <td className="border px-4 py-2">{tutor.description}</td>
+                  <td className="border px-4 py-2">{tutor.review}</td>
+                  <td className="border px-4 py-2">
+                    <button
+                      onClick={() => handleUpdate(tutor._id)}
+                      className="bg-yellow-500 text-white py-1 px-4 rounded mr-2"
+                    >
+                      Update
+                    </button>
+                    <button
+                      onClick={() => handleDelete(tutor._id)}
+                      className="bg-red-500 text-white py-1 px-4 rounded"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="7" className="text-center py-4">
+                  No tutorials found
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
 };
 
 export default MyTutorials;
