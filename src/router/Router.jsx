@@ -26,6 +26,10 @@ export const router = createBrowserRouter([
         element: <FindTutors />,
       },
       {
+        path: '/find-tutors/:category',
+        element: <FindTutors />,
+      },
+      {
         path: '/login',
         element: <Login />,
       },
