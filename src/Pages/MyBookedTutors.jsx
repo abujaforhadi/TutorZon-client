@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../Auth/AuthProvider";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 const MyBookedTutors = () => {
   const [bookedTutors, setBookedTutors] = useState([]);
@@ -8,24 +9,27 @@ const MyBookedTutors = () => {
 
   useEffect(() => {
     if (user) {
-      fetch("http://localhost:3000/bookings")
-        .then((res) => res.json())
-        .then((data) => {
-          const filteredTutors = data.filter(
+      axios
+        .get("http://localhost:3000/bookings", { withCredentials: true })
+        .then((response) => {
+          const filteredTutors = response.data.filter(
             (booking) => booking.BookingEmail === user.email
           );
           setBookedTutors(filteredTutors);
         })
-        .catch((error) => console.error("Error fetching bookings:", error));
+        .catch((error) => {
+          console.error("Error fetching bookings:", error);
+        });
     }
   }, [user]);
 
   const handleReview = (Data) => {
     const { tutorId } = Data;
 
-    fetch(`http://localhost:3000/tutor/${tutorId}`)
-      .then((res) => res.json())
-      .then((data) => {
+    axios
+      .get(`http://localhost:3000/tutor/${tutorId}`)
+      .then((response) => {
+        const data = response.data;
         const currentReview = parseInt(data.review);
         const id = data._id;
 
@@ -40,21 +44,15 @@ const MyBookedTutors = () => {
 
         const updatedReview = currentReview !== undefined ? currentReview + 1 : 1;
 
-        const reviewData = { 
+        const reviewData = {
           review: updatedReview,
-          reviewedBy: [...(data.reviewedBy || []), user._id] // Store the user's ID to track their review
+          reviewedBy: [...(data.reviewedBy || []), user._id], // Store the user's ID to track their review
         };
 
-        fetch(`http://localhost:3000/tutor/${id}`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(reviewData),
-        })
-          .then((res) => res.json())
+        axios
+          .patch(`http://localhost:3000/tutor/${id}`, reviewData)
           .then((updatedTutorData) => {
-            if (updatedTutorData.modifiedCount) {
+            if (updatedTutorData.data.modifiedCount) {
               Swal.fire({
                 position: "top-end",
                 icon: "success",
@@ -115,7 +113,9 @@ const MyBookedTutors = () => {
                 className="bg-blue-500 text-white py-1 px-4 rounded mt-2"
                 disabled={tutor.reviewedBy && tutor.reviewedBy.includes(user._id)}
               >
-                {tutor.reviewedBy && tutor.reviewedBy.includes(user._id) ? "Reviewed" : "Review"}
+                {tutor.reviewedBy && tutor.reviewedBy.includes(user._id)
+                  ? "Reviewed"
+                  : "Review"}
               </button>
             </div>
           ))

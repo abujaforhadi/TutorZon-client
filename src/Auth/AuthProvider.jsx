@@ -12,6 +12,8 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Auth from "../Firebase/Firebase.config";
+import axios from 'axios';
+
 
 const auth=Auth;
 export const AuthContext = createContext();
@@ -96,12 +98,31 @@ const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      setLoading(false);
-    });
-    return () => unSubscribe();
-  }, []);
+    const unsubscribe = onAuthStateChanged(auth, async currentUser => {
+      console.log('CurrentUser-->', currentUser)
+      if (currentUser?.email) {
+        setUser(currentUser)
+        const { data } = await axios.post(
+          ` http://localhost:3000/jwt`,
+          {
+            email: currentUser?.email,
+          },
+          { withCredentials: true }
+        )
+        console.log(data)
+      } else {
+        setUser(currentUser)
+        const { data } = await axios.get(
+          ` http://localhost:3000/logout`,
+          { withCredentials: true }
+        )
+      }
+      setLoading(false)
+    })
+    return () => {
+      return unsubscribe()
+    }
+  }, [])
 
   const authInfo = {
     user,
