@@ -44,7 +44,7 @@ const AuthProvider = ({ children }) => {
     try {
       await updateProfile(auth.currentUser, { displayName, photoURL });
     } catch (error) {
-      console.error("Error updating profile:", error.message);
+      // console.error("Error updating profile:", error.message);
       toast.error(`Error: ${error.message}`);
     } finally {
       setLoading(false);
@@ -78,7 +78,7 @@ const AuthProvider = ({ children }) => {
       setUser(user);
       toast.success("Google login successful!");
     } catch (error) {
-      console.error("Error during Google login:", error.message);
+      // console.error("Error during Google login:", error.message);
       toast.error(`Error: ${error.message}`);
     }
   };
@@ -90,7 +90,6 @@ const AuthProvider = ({ children }) => {
       setUser(null);
       toast.success("Sign-out successful.");
     } catch (error) {
-      console.error("Error during sign-out:", error.message);
       toast.error(`Error: ${error.message}`);
     } finally {
       setLoading(false);
@@ -99,7 +98,6 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async currentUser => {
-      console.log('CurrentUser-->', currentUser)
       if (currentUser?.email) {
         setUser(currentUser)
         const { data } = await axios.post(
@@ -109,7 +107,6 @@ const AuthProvider = ({ children }) => {
           },
           { withCredentials: true }
         )
-        console.log(data)
       } else {
         setUser(currentUser)
         const { data } = await axios.get(

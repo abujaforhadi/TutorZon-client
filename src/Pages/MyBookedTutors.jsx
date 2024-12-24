@@ -10,7 +10,7 @@ const MyBookedTutors = () => {
   useEffect(() => {
     if (user) {
       axios
-        .get("http://localhost:3000/bookings", { withCredentials: true })
+        .get(`http://localhost:3000/bookings?email=${user.email}`, { withCredentials: true })
         .then((response) => {
           const filteredTutors = response.data.filter(
             (booking) => booking.BookingEmail === user.email
@@ -22,6 +22,7 @@ const MyBookedTutors = () => {
         });
     }
   }, [user]);
+
 
   const handleReview = (Data) => {
     const { tutorId } = Data;

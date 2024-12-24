@@ -1,51 +1,56 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../Auth/AuthProvider";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router"; // For navigation after deletion/update
+import { useNavigate } from "react-router";
+import axios from "axios";
 
 const MyTutorials = () => {
   const [bookedTutors, setBookedTutors] = useState([]);
   const { user } = useContext(AuthContext);
-  const navigate = useNavigate(); // For navigation after delete/update
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (user) {
-      fetch("http://localhost:3000/find-tutors")
-        .then((res) => res.json())
-        .then((data) => {
-          const filteredTutors = data.filter(
-            (data) => data.userEmail === user.email
+      axios
+        .get(`http://localhost:3000/my-tutorials?email=${user.email}`, { withCredentials: true })
+        .then((response) => {
+          const filteredTutors = response.data.filter(
+            (tutor) => tutor.userEmail === user.email
           );
           setBookedTutors(filteredTutors);
         })
-        .catch((error) => console.error("Error fetching bookings:", error));
+        .catch((error) => {
+          console.error("Error fetching bookings:", error);
+          Swal.fire("Error!", "Failed to fetch tutorials.", "error");
+        });
     }
   }, [user]);
 
-  const handleDelete = (id) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "This tutorial will be permanently deleted.",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        fetch(`http://localhost:3000/My-Tutorials-delete/${id}`, {
-          method: "DELETE",
+ const handleDelete = (id) => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "This tutorial will be permanently deleted.",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Yes, delete it!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      fetch(`http://localhost:3000/My-Tutorials-delete/${id}`, {
+        method: "DELETE",
+      })
+        .then((res) => res.json())
+        .then(() => {
+          setBookedTutors(bookedTutors.filter((tutor) => tutor._id !== id));
+          Swal.fire("Deleted!", "Your tutorial has been deleted.", "success");
         })
-          .then((res) => res.json())
-          .then(() => {
-            setBookedTutors(bookedTutors.filter((tutor) => tutor._id !== id));
-            Swal.fire("Deleted!", "Your tutorial has been deleted.", "success");
-          })
-          .catch((error) => {
-            console.error("Error deleting tutor:", error);
-            Swal.fire("Error!", "Failed to delete the tutorial.", "error");
-          });
-      }
-    });
-  };
+        .catch((error) => {
+          console.error("Error deleting tutor:", error);
+          Swal.fire("Error!", "Failed to delete the tutorial.", "error");
+        });
+    }
+  });
+};
+
 
   const handleUpdate = (id) => {
     navigate(`/update-tutor/${id}`);

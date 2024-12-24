@@ -12,7 +12,7 @@ const FindTutors = () => {
 
     fetch(url)
       .then((res) => res.json())
-      .then((data) => setTutors(data))
+      .then((data) =>{console.log(data); setTutors(data)})
       .catch((error) => console.error("Failed to fetch tutors:", error));
   }, [category]);
 
