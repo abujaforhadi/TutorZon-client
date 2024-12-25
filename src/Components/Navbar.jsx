@@ -32,7 +32,7 @@ const Navbar = () => {
     ];
 
     return (
-        <nav className="sticky top-0 shadow-lg p-2 border-b z-50 bg-white/80">
+        <nav className="sticky top-0 text-black shadow-lg p-2 border-b z-50 bg-white/80">
             <div className="md:mx-10 flex items-center justify-between">
                 <NavLink
                     to="/"

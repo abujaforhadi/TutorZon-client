@@ -20,7 +20,7 @@ const FindTutors = () => {
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setTutors(data);
         setFilteredTutors(data); // Initially show all tutors
       })
