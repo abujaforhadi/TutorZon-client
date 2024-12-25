@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center">
           {/* Left Section */}
           <div className="text-center md:text-left mb-4 md:mb-0">
-            <h2 className="text-2xl font-bold">TutorZen</h2>
+            <img src='https://i.ibb.co.com/C54XfZk/Tutor-Zen-it-is-a-education-learning-site-logo-1-removebg-preview.png' className="w-1/3"></img>
             <p className="text-sm">Your go-to platform for learning and teaching.</p>
           </div>
 

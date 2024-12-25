@@ -38,7 +38,7 @@ const Navbar = () => {
                     to="/"
                     className="text-xl font-bold text-current hover:text-primary"
                 >
-                    TutorZen
+                    <img src="https://i.ibb.co.com/C54XfZk/Tutor-Zen-it-is-a-education-learning-site-logo-1-removebg-preview.png" className="w-32" alt="" srcset="" />
                 </NavLink>
 
                 {/* Desktop Links */}
@@ -49,7 +49,7 @@ const Navbar = () => {
                                 <NavLink
                                     key={link.name}
                                     to={link.path}
-                                    className="text-sm text-current hover:text-primary"
+                                    className=" text-current hover:text-primary"
                                 >
                                     {link.name}
                                 </NavLink>
