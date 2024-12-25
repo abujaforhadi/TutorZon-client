@@ -38,7 +38,7 @@ const UpdateTutorial = () => {
     };
 
     try {
-      const response = await fetch(`http://localhost:3000/My-Tutorials-update/${tutor._id}`, {
+      const response = await fetch(`https://a11server.vercel.app/My-Tutorials-update/${tutor._id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

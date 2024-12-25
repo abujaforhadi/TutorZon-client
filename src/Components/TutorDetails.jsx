@@ -11,7 +11,7 @@ const TutorDetails = () => {
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/tutor/${details}`)
+    fetch(`https://a11server.vercel.app/tutor/${details}`)
       .then((res) => res.json())
       .then((data) => setTutor(data))
       .catch((error) => console.error("Failed to fetch tutor details:", error));
@@ -49,7 +49,7 @@ const TutorDetails = () => {
       
     };
 
-    fetch("http://localhost:3000/bookings", {
+    fetch("https://a11server.vercel.app/bookings", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

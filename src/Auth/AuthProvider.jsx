@@ -1,6 +1,5 @@
 import React, { useState, createContext, useEffect } from "react";
 import {
- 
   createUserWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
@@ -12,17 +11,16 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Auth from "../Firebase/Firebase.config";
-import axios from 'axios';
+import axios from "axios";
 
-
-const auth=Auth;
+const auth = Auth;
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const createNewUser = async (email, password) => {
+  const createNewUser = async (email, password, displayName, photoURL) => {
     setLoading(true);
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -31,6 +29,14 @@ const AuthProvider = ({ children }) => {
         password
       );
       setUser(userCredential.user);
+
+      // Store the user in the database
+      await axios.post("https://a11server.vercel.app/user", {
+        email,
+        displayName,
+        photoURL,
+      });
+
       toast.success("Account created successfully!");
     } catch (error) {
       toast.error(`Error: ${error.message}`);
@@ -38,21 +44,37 @@ const AuthProvider = ({ children }) => {
       setLoading(false);
     }
   };
-
   const ProfileUpdate = async (displayName, photoURL) => {
     setLoading(true);
     try {
       await updateProfile(auth.currentUser, { displayName, photoURL });
     } catch (error) {
-      // console.error("Error updating profile:", error.message);
+      console.error("Error updating profile:", error.message);
       toast.error(`Error: ${error.message}`);
     } finally {
       setLoading(false);
     }
   };
 
- 
+  const loginWithGoogle = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      setUser(user);
 
+      // Store the user in the database
+      await axios.post("https://a11server.vercel.app/user", {
+        email: user.email,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+      });
+
+      toast.success("Google login successful!");
+    } catch (error) {
+      toast.error(`Error: ${error.message}`);
+    }
+  };
   const login = async (email, password) => {
     setLoading(true);
     try {
@@ -70,18 +92,6 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  const loginWithGoogle = async () => {
-    const provider = new GoogleAuthProvider();
-    try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      setUser(user);
-      toast.success("Google login successful!");
-    } catch (error) {
-      // console.error("Error during Google login:", error.message);
-      toast.error(`Error: ${error.message}`);
-    }
-  };
 
   const logout = async () => {
     setLoading(true);
@@ -97,39 +107,32 @@ const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async currentUser => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser?.email) {
-        setUser(currentUser)
-        const { data } = await axios.post(
-          ` http://localhost:3000/jwt`,
-          {
-            email: currentUser?.email,
-          },
+        setUser(currentUser);
+        await axios.post(
+          "https://a11server.vercel.app/jwt",
+          { email: currentUser?.email },
           { withCredentials: true }
-        )
+        );
       } else {
-        setUser(currentUser)
-        const { data } = await axios.get(
-          ` http://localhost:3000/logout`,
-          { withCredentials: true }
-        )
+        setUser(currentUser);
+        await axios.get("https://a11server.vercel.app/logout", { withCredentials: true });
       }
-      setLoading(false)
-    })
-    return () => {
-      return unsubscribe()
-    }
-  }, [])
+      setLoading(false);
+    });
+    return () => unsubscribe();
+  }, []);
 
   const authInfo = {
     user,
     setUser,
     createNewUser,
-    login,
+    loginWithGoogle,
     logout,
     loading,
     ProfileUpdate,
-    loginWithGoogle,
+    login
   };
 
   return (
@@ -145,7 +148,7 @@ const AuthProvider = ({ children }) => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="light" 
+        theme="light"
       />
     </AuthContext.Provider>
   );

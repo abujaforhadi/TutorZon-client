@@ -7,8 +7,8 @@ const FindTutors = () => {
 
   useEffect(() => {
     const url = category
-      ? `http://localhost:3000/find-tutors?language=${category}`
-      : "http://localhost:3000/find-tutors";
+      ? `https://a11server.vercel.app/find-tutors?language=${category}`
+      : "https://a11server.vercel.app/find-tutors";
 
     fetch(url)
       .then((res) => res.json())

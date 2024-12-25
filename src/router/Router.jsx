@@ -52,12 +52,12 @@ export const router = createBrowserRouter([
       {
         path: '/tutor/:details',
         element: <PrivateRouter><TutorDetails /></PrivateRouter>,
-        loader: ({ params }) => fetch(`http://localhost:3000/tutor/${params.details}`),
+        loader: ({ params }) => fetch(`https://a11server.vercel.app/tutor/${params.details}`),
       },
       {
         path: '/update-tutor/:details',
         element: <PrivateRouter><UpdateTutorial /></PrivateRouter>,
-        loader: ({ params }) => fetch(`http://localhost:3000/tutor/${params.details}`),
+        loader: ({ params }) => fetch(`https://a11server.vercel.app/tutor/${params.details}`),
       },
     ],
     errorElement: <Error />

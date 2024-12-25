@@ -10,7 +10,7 @@ const MyBookedTutors = () => {
   useEffect(() => {
     if (user) {
       axios
-        .get(`http://localhost:3000/bookings?email=${user.email}`, { withCredentials: true })
+        .get(`https://a11server.vercel.app/bookings?email=${user.email}`, { withCredentials: true })
         .then((response) => {
           const filteredTutors = response.data.filter(
             (booking) => booking.BookingEmail === user.email
@@ -28,7 +28,7 @@ const MyBookedTutors = () => {
     const { tutorId } = Data;
 
     axios
-      .get(`http://localhost:3000/tutor/${tutorId}`)
+      .get(`https://a11server.vercel.app/tutor/${tutorId}`)
       .then((response) => {
         const data = response.data;
         const currentReview = parseInt(data.review);
@@ -51,7 +51,7 @@ const MyBookedTutors = () => {
         };
 
         axios
-          .patch(`http://localhost:3000/tutor/${id}`, reviewData)
+          .patch(`https://a11server.vercel.app/tutor/${id}`, reviewData)
           .then((updatedTutorData) => {
             if (updatedTutorData.data.modifiedCount) {
               Swal.fire({

@@ -12,7 +12,7 @@ const MyTutorials = () => {
   useEffect(() => {
     if (user) {
       axios
-        .get(`http://localhost:3000/my-tutorials?email=${user.email}`, { withCredentials: true })
+        .get(`https://a11server.vercel.app/my-tutorials?email=${user.email}`, { withCredentials: true })
         .then((response) => {
           const filteredTutors = response.data.filter(
             (tutor) => tutor.userEmail === user.email
@@ -35,7 +35,7 @@ const MyTutorials = () => {
     confirmButtonText: "Yes, delete it!",
   }).then((result) => {
     if (result.isConfirmed) {
-      fetch(`http://localhost:3000/My-Tutorials-delete/${id}`, {
+      fetch(`https://a11server.vercel.app/My-Tutorials-delete/${id}`, {
         method: "DELETE",
       })
         .then((res) => res.json())

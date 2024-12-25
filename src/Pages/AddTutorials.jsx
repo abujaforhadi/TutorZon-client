@@ -52,7 +52,7 @@ const AddTutorials = () => {
 
     if (!validateForm()) return;
 
-    fetch("http://localhost:3000/find-tutors", {
+    fetch("https://a11server.vercel.app/find-tutors", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
