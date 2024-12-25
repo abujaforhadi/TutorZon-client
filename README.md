@@ -3,7 +3,6 @@
 ## Overview
 TutorZon is an Online Tutor Booking Platform designed to connect users with tutors across various languages and subjects. It simplifies the process of finding, reviewing, and booking tutors through an interactive and user-friendly interface. The platform is essential for promoting accessible learning opportunities globally and streamlining the tutor hiring process.
 
-**Similar Platforms:** Preply, Italki
 
 ## Live URL
 [Visit TutorZon](https://assigment11-7f8f3.web.app/)
