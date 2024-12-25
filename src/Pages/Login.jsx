@@ -90,6 +90,7 @@ const Login = () => {
             <input
               id="remember"
               type="checkbox"
+              required
               className="group shadow-sm shadow-stone-950/5 inline-block relative h-5 w-5 cursor-pointer rounded bg-transparent border border-stone-200 transition-all duration-200 ease-in aria-disabled:opacity-50 aria-disabled:pointer-events-none hover:shadow-md"
             />
             <p className="font-sans antialiased text-base text-stone-600">

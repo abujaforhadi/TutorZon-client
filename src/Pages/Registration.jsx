@@ -23,25 +23,29 @@ const Registration = () => {
   const handleGoogleLogin = () => {
     loginWithGoogle()
       .then(() => navigate("/"))
-      .catch((error) => setError(error.message));
+      
   };
 
   const handleSignUp = async (e) => {
     e.preventDefault();
     const { name, photo, email, password } = formData;
-
-   
-    setPasswordError("");
-
+  
+    // Basic password validation
+    if (password.length < 6) {
+      setPasswordError("Password must be at least 6 characters long.");
+      return;
+    }
+  
     try {
-      await createNewUser(email, password);
+      // Pass the correct variables
+      await createNewUser(email, password, name, photo);
       await ProfileUpdate(name, photo);
       navigate("/", { replace: true });
     } catch (error) {
       setError(error.message);
     }
   };
-
+  
 
 
   return (

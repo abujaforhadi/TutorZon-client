@@ -3,6 +3,51 @@ import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 import AOS from "aos";
 import Swal from "sweetalert2";
 
+const PricingCard = ({ planName, price, duration, features, onBuyNow }) => {
+  return (
+    <div
+      className="w-full max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300 dark:bg-gray-800 dark:border-gray-700"
+      data-aos="fade-up"
+    >
+      <h5 className="mb-4 text-2xl font-semibold text-gray-700 dark:text-gray-300">
+        {planName}
+      </h5>
+      <div className="flex items-baseline text-gray-900 dark:text-white mb-6">
+        <span className="text-3xl font-medium">$</span>
+        <span className="text-5xl font-bold">{price}</span>
+        <span className="text-lg text-gray-500 dark:text-gray-400 ml-1">
+          /{duration}
+        </span>
+      </div>
+      <ul className="space-y-4 mb-6">
+        {features.map((feature, index) => (
+          <li
+            key={index}
+            className={`flex items-center ${
+              feature.included ? "" : "line-through text-gray-400"
+            }`}
+          >
+            {feature.included ? (
+              <FaCheckCircle className="text-green-500 w-5 h-5 mr-3" />
+            ) : (
+              <FaTimesCircle className="text-gray-400 w-5 h-5 mr-3" />
+            )}
+            <span className="text-base text-gray-600 dark:text-gray-400">
+              {feature.text}
+            </span>
+          </li>
+        ))}
+      </ul>
+      <button
+        className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+        onClick={onBuyNow}
+      >
+        Buy Now
+      </button>
+    </div>
+  );
+};
+
 const Modal = ({ isOpen, onClose, title, content, action }) => {
   if (!isOpen) return null;
 
@@ -34,50 +79,7 @@ const Modal = ({ isOpen, onClose, title, content, action }) => {
   );
 };
 
-const PricingCard = ({ planName, price, duration, features, onBuyNow }) => {
-  return (
-    <div
-      className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700"
-      data-aos="fade-up" // AOS Animation
-    >
-      <h5 className="mb-4 text-xl font-medium text-gray-500 dark:text-gray-400">
-        {planName}
-      </h5>
-      <div className="flex items-baseline text-gray-900 dark:text-white">
-        <span className="text-3xl font-semibold">$</span>
-        <span className="text-5xl font-extrabold tracking-tight">{price}</span>
-        <span className="ms-1 text-xl font-normal text-gray-500 dark:text-gray-400">
-          /{duration}
-        </span>
-      </div>
-      <ul role="list" className="space-y-5 my-7">
-        {features.map((feature, index) => (
-          <li
-            key={index}
-            className={`flex items-center ${
-              feature.included ? "" : "line-through decoration-gray-500"
-            }`}
-          >
-            {feature.included ? (
-              <FaCheckCircle className="text-blue-700 dark:text-blue-500 w-5 h-5" />
-            ) : (
-              <FaTimesCircle className="text-gray-400 dark:text-gray-500 w-5 h-5" />
-            )}
-            <span className="text-base font-normal leading-tight text-gray-500 dark:text-gray-400 ms-3">
-              {feature.text}
-            </span>
-          </li>
-        ))}
-      </ul>
-      <button
-        className="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-200 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-700 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center"
-        onClick={onBuyNow}
-      >
-        Buy Now
-      </button>
-    </div>
-  );
-};
+
 
 const PricingCards = () => {
   const plans = [
@@ -148,17 +150,27 @@ const PricingCards = () => {
   };
 
   return (
-    <div className="flex flex-wrap gap-6 justify-center">
-      {plans.map((plan, index) => (
-        <PricingCard
-          key={index}
-          planName={plan.planName}
-          price={plan.price}
-          duration={plan.duration}
-          features={plan.features}
-          onBuyNow={() => handleBuyNow(plan)}
-        />
-      ))}
+    <section className="py-16 bg-gray-50 dark:bg-gray-900">
+      <div className="max-w-7xl mx-auto text-center mb-12">
+        <h2 className="text-4xl font-bold text-gray-800 dark:text-white">
+          Affordable Plans for Everyone
+        </h2>
+        <p className="text-lg text-gray-600 dark:text-gray-400 mt-4">
+          Choose a plan that fits your needs and take the next step toward your goals.
+        </p>
+      </div>
+      <div className="flex flex-wrap gap-8 justify-center">
+        {plans.map((plan, index) => (
+          <PricingCard
+            key={index}
+            planName={plan.planName}
+            price={plan.price}
+            duration={plan.duration}
+            features={plan.features}
+            onBuyNow={() => handleBuyNow(plan)}
+          />
+        ))}
+      </div>
       <Modal
         isOpen={confirmationModalOpen}
         onClose={() => setConfirmationModalOpen(false)}
@@ -166,7 +178,7 @@ const PricingCards = () => {
         content={`Are you sure you want to purchase the ${selectedPlan?.planName} for $${selectedPlan?.price}?`}
         action={confirmPurchase}
       />
-    </div>
+    </section>
   );
 };
 

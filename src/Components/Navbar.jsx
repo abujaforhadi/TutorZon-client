@@ -65,62 +65,41 @@ const Navbar = () => {
                         value="synthwave"
                     />
                     {user ? (
-                        <div className="dropdown dropdown-end flex items-center">
-                        <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                            <div className="w-10 rounded-full">
-                            <img
-                                src={user.photoURL || "default-avatar-url"}
-                                alt={user.displayName || "User"}
-                                className="h-8 w-8 rounded-full border cursor-pointer"
-                                onClick={() => {
-                                    console.log("Profile image clicked!");
-                                    setDropdownOpen(!isDropdownOpen);
-                                }}
-                                title={user.displayName}
-                            />                            </div>
-                        </div>
-                        <button
+                        <div className="flex items-center">
+                            <div className="dropdown dropdown-end ">
+                                <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                                    <div className="w-10 rounded-full">
+                                        <img
+                                            src={user.photoURL || "default-avatar-url"}
+                                            alt={user.displayName || "User"}
+                                            className="h-8 w-8 rounded-full border cursor-pointer"
+                                            onClick={() => {
+                                                console.log("Profile image clicked!");
+                                                setDropdownOpen(!isDropdownOpen);
+                                            }}
+                                            title={user.displayName}
+                                        />
+                                    </div>
+                                </div>
+
+                                <ul
+                                    tabIndex={0}
+                                    className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+
+                                    <li>{user.displayName}</li>
+
+                                </ul>
+                            </div>
+                            <button
                                 onClick={handleLogout}
                                 className="text-sm py-1.5 px-3 bg-red-500 text-white rounded hover:bg-red-400"
                                 disabled={isLoggingOut}
                             >
                                 {isLoggingOut ? "Logout" : "Logout"}
                             </button>
-                        <ul
-                            tabIndex={0}
-                            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                            
-                            <li>{user.displayName}</li>
-                           
-                        </ul>
-                    </div>
-                        // <div className="relative flex items-center gap-4">
-                        //     <img
-                        //         src={user.photoURL || "default-avatar-url"}
-                        //         alt={user.displayName || "User"}
-                        //         className="h-8 w-8 rounded-full border cursor-pointer"
-                        //         onClick={() => {
-                        //             console.log("Profile image clicked!");
-                        //             setDropdownOpen(!isDropdownOpen);
-                        //         }}
-                        //         title={user.displayName}
-                        //     />
+                        </div>
 
-                        //     {isDropdownOpen && (
-                        //         <div className="absolute right-0 mt-2 w-48  shadow-md rounded border">
-                        //             <div className="px-4 py-2 text-sm font-semibold text-gray-700">
-                        //                 {user.displayName || "User"}
-                        //             </div>
-                        //         </div>
-                        //     )}
-                        //     <button
-                        //         onClick={handleLogout}
-                        //         className="text-sm py-1.5 px-3 bg-red-500 text-white rounded hover:bg-red-400"
-                        //         disabled={isLoggingOut}
-                        //     >
-                        //         {isLoggingOut ? "Logout" : "Logout"}
-                        //     </button>
-                        // </div>
+                     
                     ) : (
                         <>
                             <NavLink
@@ -138,7 +117,7 @@ const Navbar = () => {
                         </>
                     )}
 
-                    
+
                 </div>
 
                 {/* Mobile Menu Toggle */}
