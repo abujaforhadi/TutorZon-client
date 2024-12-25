@@ -150,9 +150,9 @@ const PricingCards = () => {
   };
 
   return (
-    <section className="py-16 bg-gray-50 dark:bg-gray-900">
+    <section className="py-16  dark:bg-gray-900">
       <div className="max-w-7xl mx-auto text-center mb-12">
-        <h2 className="text-4xl font-bold text-gray-800 dark:text-white">
+        <h2 className="text-4xl font-bold ">
           Affordable Plans for Everyone
         </h2>
         <p className="text-lg text-gray-600 dark:text-gray-400 mt-4">

@@ -40,7 +40,7 @@ const StatsSection = () => {
   }, []);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-8 py-12 px-4 bg-gray-50">
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-8 py-12 px-4 ">
       {/* Total Users */}
       <div
         className="bg-white p-8 rounded-lg shadow-lg text-center hover:shadow-xl transition-shadow duration-300"
