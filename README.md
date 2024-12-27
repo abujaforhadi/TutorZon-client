@@ -8,8 +8,8 @@ TutorZon is an Online Tutor Booking Platform designed to connect users with tuto
 [Visit TutorZon](https://assigment11-7f8f3.web.app/)
 
 ## GitHub Repositories
-- **Client Repository:** [GitHub - TutorZon Client](https://github.com/programming-hero-web-course2/b10a11-client-side-abujaforhadi)
-- **Server Repository:** [GitHub - TutorZon Server](https://github.com/programming-hero-web-course2/b10a11-server-side-abujaforhadi)
+- **Client Repository:** [GitHub - TutorZon Client](https://github.com/abujaforhadi/TutorZon-client)
+- **Server Repository:** [GitHub - TutorZon Server](git remote add origin https://github.com/abujaforhadi/TutorZon-server)
 
 ## Key Features
 - **Registration/Login**: Users can register using email and password or via Google Sign-In.
@@ -33,4 +33,4 @@ TutorZon is an Online Tutor Booking Platform designed to connect users with tuto
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/programming-hero-web-course2/b10a11-client-side-abujaforhadi.git
+   git clone https://github.com/abujaforhadi/TutorZon-client.git
