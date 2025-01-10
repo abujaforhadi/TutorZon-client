@@ -48,8 +48,8 @@ const StatsSection = () => {
         className="bg-white p-8 rounded-lg shadow-lg text-center hover:shadow-xl transition-shadow duration-300"
         data-aos="fade-up"
       >
-        <FaUsers className="text-4xl text-orange-600 mx-auto mb-4" />
-        <h3 className="text-3xl font-bold text-orange-600">{usersCount}</h3>
+        <FaUsers className="text-4xl text-blue-600 mx-auto mb-4" />
+        <h3 className="text-3xl font-bold text-blue-600">{usersCount}</h3>
         <p className="text-gray-600 text-lg">Total Users</p>
       </div>
 
@@ -59,8 +59,8 @@ const StatsSection = () => {
         data-aos="fade-up"
         data-aos-delay="200"
       >
-        <FaChalkboardTeacher className="text-4xl text-orange-600 mx-auto mb-4" />
-        <h3 className="text-3xl font-bold text-orange-600">{tutorsCount}</h3>
+        <FaChalkboardTeacher className="text-4xl text-blue-600 mx-auto mb-4" />
+        <h3 className="text-3xl font-bold text-blue-600">{tutorsCount}</h3>
         <p className="text-gray-600 text-lg">Total Tutors</p>
       </div>
 
@@ -70,8 +70,8 @@ const StatsSection = () => {
         data-aos="fade-up"
         data-aos-delay="400"
       >
-        <FaStar className="text-4xl text-orange-600 mx-auto mb-4" />
-        <h3 className="text-3xl font-bold text-orange-600">{reviewsCount}</h3>
+        <FaStar className="text-4xl text-blue-600 mx-auto mb-4" />
+        <h3 className="text-3xl font-bold text-blue-600">{reviewsCount}</h3>
         <p className="text-gray-600 text-lg">Total Reviews</p>
       </div>
 
@@ -81,8 +81,8 @@ const StatsSection = () => {
         data-aos="fade-up"
         data-aos-delay="600"
       >
-        <FaLanguage className="text-4xl text-orange-600 mx-auto mb-4" />
-        <h3 className="text-3xl font-bold text-orange-600">{languagesCount}</h3>
+        <FaLanguage className="text-4xl text-blue-600 mx-auto mb-4" />
+        <h3 className="text-3xl font-bold text-blue-600">{languagesCount}</h3>
         <p className="text-gray-600 text-lg">Total Languages</p>
       </div>
     </div>
