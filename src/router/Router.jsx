@@ -11,6 +11,7 @@ import MyBookedTutors from "../Pages/MyBookedTutors";
 import MyTutorials from "../Pages/MyTutorials";
 import Error from "../Pages/Error";
 import UpdateTutorial from "../Pages/UpdateTutorial";
+import Contact from "../Pages/Contact";
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
       {
         path: '/login',
         element: <Login />,
+      },
+      {
+        path: '/contact',
+        element: <Contact />,
       },
       {
         path: '/signup',
