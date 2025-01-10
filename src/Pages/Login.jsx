@@ -42,88 +42,101 @@ const Login = () => {
   };
 
   return (
-    <div className="my-5 w-full mx-auto rounded-lg border shadow-sm overflow-hidden bg-white border-stone-200 shadow-stone-950/5 max-w-xs">
-      <div>
-        <div className="border overflow-hidden bg-stone-800 border-stone-950 shadow-stone-950/25 rounded m-2 grid h-24 place-items-center shadow-none">
-          <span className="font-sans antialiased font-bold text-xl md:text-2xl lg:text-3xl text-stone-50">
-            Sign In
-          </span>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="flex flex-row w-full max-w-4xl bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden">
+        {/* SVG Section */}
+        <div className="hidden md:flex md:w-1/2 bg-blue-100 dark:bg-gray-700 items-center justify-center">
+          <img
+            src="/signin.svg"
+            alt="Sign In Illustration"
+            className="w-3/4 h-auto object-contain"
+          />
         </div>
-        <form onSubmit={handleSignIn} className="w-full h-max rounded px-3.5 py-2.5">
-          <div className="mb-4 mt-2 space-y-1.5">
-            <label
-              htmlFor="email"
-              className="font-sans antialiased text-sm text-stone-800 dark:text-white font-semibold"
-            >
-              Email
-            </label>
-            <div className="relative w-full">
+
+        {/* Form Section */}
+        <div className="flex flex-col justify-center p-6 md:w-1/2">
+          <h2 className="text-2xl font-semibold text-gray-800 dark:text-white text-center mb-6">
+            Welcome Back
+          </h2>
+          <form onSubmit={handleSignIn}>
+            <div className="mb-4">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
+                Email Address
+              </label>
               <input
-                name="email"
+                id="email"
+                type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="someone@example.com"
-                type="email"
-                className="w-full outline-none focus:outline-none text-stone-800 dark:text-white placeholder:text-stone-600/60 ring-transparent border border-stone-200 transition-all ease-in disabled:opacity-50 disabled:pointer-events-none select-none text-sm py-2 px-2.5 ring shadow-sm bg-white rounded-lg duration-100 hover:border-stone-300 hover:ring-none focus:border-stone-400 focus:ring-none peer"
+                className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-gray-300"
+                required
               />
             </div>
-          </div>
-          <div className="mb-4 space-y-1.5">
-            <label
-              htmlFor="password"
-              className="font-sans antialiased text-sm text-stone-800 dark:text-white font-semibold"
-            >
-              Password
-            </label>
-            <div className="relative w-full">
+            <div className="mb-4">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
+                Password
+              </label>
               <input
-                name="password"
+                id="password"
+                type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="************"
-                type="password"
-                className="w-full outline-none focus:outline-none text-stone-800 dark:text-white placeholder:text-stone-600/60 ring-transparent border border-stone-200 transition-all ease-in disabled:opacity-50 disabled:pointer-events-none select-none text-sm py-2 px-2.5 ring shadow-sm bg-white rounded-lg duration-100 hover:border-stone-300 hover:ring-none focus:border-stone-400 focus:ring-none peer"
+                placeholder="********"
+                className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-gray-300"
+                required
               />
             </div>
-          </div>
-          <label htmlFor="remember" className="mb-4 flex items-center gap-2">
-            <input
-              id="remember"
-              type="checkbox"
-              required
-              className="group shadow-sm shadow-stone-950/5 inline-block relative h-5 w-5 cursor-pointer rounded bg-transparent border border-stone-200 transition-all duration-200 ease-in aria-disabled:opacity-50 aria-disabled:pointer-events-none hover:shadow-md"
-            />
-            <p className="font-sans antialiased text-base text-stone-600">
-              Remember Me
-            </p>
-          </label>
-
-          <button
-            type="submit"
-            disabled={isLoading}
-            className={`inline-flex items-center justify-center border align-middle select-none font-sans font-medium text-center duration-300 ease-in disabled:opacity-50 disabled:cursor-not-allowed text-sm py-2 px-4 shadow-sm bg-stone-800 hover:bg-stone-700 relative bg-gradient-to-b from-stone-700 to-stone-800 border-stone-900 text-stone-50 rounded-lg`}
-          >
-            {isLoading ? "Signing In..." : "Sign In"}
-          </button>
-        </form>
-        <button
-          onClick={handleGoogleLogin}
-          disabled={isLoading}
-          className="inline-flex items-center justify-center border align-middle select-none font-sans font-medium text-center duration-300 ease-in disabled:opacity-50 disabled:cursor-not-allowed text-sm py-2 px-4 shadow-sm relative bg-gradient-to-b from-stone-700 to-stone-800 rounded-lg hover:bg-gradient-to-b hover:from-stone-800 hover:to-stone-800 border-[#1877F2] bg-[#1877F2] text-white hover:brightness-110"
-        >
-          
-          Continue with Google
-        </button>
-        <div className="w-full px-3.5 pt-2 pb-3.5 rounded text-center">
-          <small className="font-sans antialiased text-sm my-1 flex items-center justify-center gap-1 text-stone-600">
-            Don't have an account?
-            <Link
-              to="/signup"
-              className="font-sans antialiased text-sm text-stone-500 font-bold"
+            <div className="flex items-center justify-between mb-4">
+              <label className="flex items-center text-sm text-gray-600 dark:text-gray-400">
+                <input
+                  type="checkbox"
+                  className="mr-2 rounded border-gray-300 dark:border-gray-700 focus:ring-blue-500"
+                  required
+                />
+                Remember Me
+              </label>
+              <Link
+                to="/forgot-password"
+                className="text-sm text-blue-600 hover:underline dark:text-blue-400"
+              >
+                Forgot Password?
+              </Link>
+            </div>
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full flex items-center justify-center px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
             >
-              Sign up
-            </Link>
-          </small>
+              {isLoading ? "Signing In..." : "Sign In"}
+            </button>
+          </form>
+          <div className="mt-6">
+            <button
+              onClick={handleGoogleLogin}
+              disabled={isLoading}
+              className="w-full flex items-center justify-center px-4 py-2 text-white bg-red-500 hover:bg-red-600 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400 disabled:opacity-50"
+            >
+              Continue with Google
+            </button>
+          </div>
+          <div className="mt-6 text-center">
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              Don’t have an account?{' '}
+              <Link
+                to="/signup"
+                className="font-medium text-blue-600 hover:underline dark:text-blue-400"
+              >
+                Sign Up
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </div>

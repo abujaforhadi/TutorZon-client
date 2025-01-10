@@ -6,7 +6,7 @@ const Hero = () => {
     const { user } = useContext(AuthContext);
 
     return (
-        <section className="min-h-screen  flex items-center justify-center">
+        <section className=" flex items-center justify-center">
             <div className="px-4 mx-auto sm:px-6 lg:px-8">
                 <div className="flex flex-col-reverse md:flex-row items-center gap-12">
                     <div className="text-center md:text-left">

@@ -4,8 +4,7 @@ import { AuthContext } from "../Auth/AuthProvider";
 
 const Registration = () => {
   const navigate = useNavigate();
-  const { createNewUser, ProfileUpdate, loginWithGoogle } =
-    useContext(AuthContext);
+  const { createNewUser, ProfileUpdate, loginWithGoogle } = useContext(AuthContext);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -23,21 +22,19 @@ const Registration = () => {
   const handleGoogleLogin = () => {
     loginWithGoogle()
       .then(() => navigate("/"))
-      
+      .catch(() => setError("Google login failed. Try again later."));
   };
 
   const handleSignUp = async (e) => {
     e.preventDefault();
     const { name, photo, email, password } = formData;
-  
-    // Basic password validation
+
     if (password.length < 6) {
       setPasswordError("Password must be at least 6 characters long.");
       return;
     }
-  
+
     try {
-      // Pass the correct variables
       await createNewUser(email, password, name, photo);
       await ProfileUpdate(name, photo);
       navigate("/", { replace: true });
@@ -45,120 +42,129 @@ const Registration = () => {
       setError(error.message);
     }
   };
-  
-
 
   return (
-    <div className="mx-2 md:w-1/3 md:mx-auto">
-      <div className="border overflow-hidden bg-stone-800 border-stone-950 shadow-stone-950/25 rounded m-2 grid h-24 place-items-center shadow-none">
-        <span className="font-sans antialiased font-bold text-xl md:text-2xl lg:text-3xl text-stone-50">
-          Sign Up
-        </span>
-      </div>
-      {error && (
-        <div className="mb-4 text-red-500 text-center">{error}</div>
-      )}
-      <form
-        onSubmit={handleSignUp}
-        className="w-full h-max rounded px-3.5 py-2.5"
-      >
-        <div className="mb-4 mt-2 space-y-1.5">
-          <label
-            htmlFor="name"
-            className="font-sans antialiased text-sm text-stone-800 dark:text-white font-semibold"
-          >
-            Name
-          </label>
-          <div className="relative w-full">
-            <input
-              name="name"
-              placeholder="Your Name"
-              type="text"
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full aria-disabled:cursor-not-allowed outline-none focus:outline-none text-stone-800 dark:text-white placeholder:text-stone-600/60 ring-transparent border border-stone-200 transition-all ease-in disabled:opacity-50 disabled:pointer-events-none select-none text-sm py-2 px-2.5 ring shadow-sm bg-white rounded-lg duration-100 hover:border-stone-300 hover:ring-none focus:border-stone-400 focus:ring-none peer"
-            />
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="flex flex-row w-full max-w-4xl bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden">
+        {/* SVG Section */}
+        <div className="hidden md:flex md:w-1/2 bg-blue-100 dark:bg-gray-700 items-center justify-center">
+          <img
+            src="/signup.svg"
+            alt="Sign Up Illustration"
+            className="w-3/4 h-auto object-contain"
+          />
+        </div>
+
+        {/* Form Section */}
+        <div className="flex flex-col justify-center p-6 md:w-1/2">
+          <h2 className="text-2xl font-semibold text-gray-800 dark:text-white text-center mb-6">
+            Create Your Account
+          </h2>
+          {error && (
+            <div className="mb-4 text-red-500 text-center">{error}</div>
+          )}
+          <form onSubmit={handleSignUp}>
+            <div className="mb-4">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
+                Name
+              </label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Your Name"
+                className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-gray-300"
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
+                Email Address
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="someone@example.com"
+                className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-gray-300"
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
+                Password
+              </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="********"
+                className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-gray-300"
+                required
+              />
+              {passwordError && (
+                <p className="text-red-500 text-sm mt-2">{passwordError}</p>
+              )}
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="photo"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
+                Photo URL
+              </label>
+              <input
+                id="photo"
+                name="photo"
+                type="url"
+                value={formData.photo}
+                onChange={handleChange}
+                placeholder="Photo URL"
+                className="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-gray-300"
+              />
+            </div>
+            <button
+              type="submit"
+              className="w-full flex items-center justify-center px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              Sign Up
+            </button>
+          </form>
+          <div className="mt-6">
+            <button
+              onClick={handleGoogleLogin}
+              className="w-full flex items-center justify-center px-4 py-2 text-white bg-red-500 hover:bg-red-600 rounded-md focus:outline-none focus:ring-2 focus:ring-red-400"
+            >
+              Continue with Google
+            </button>
+          </div>
+          <div className="mt-6 text-center">
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              Already have an account?{' '}
+              <Link
+                to="/login"
+                className="font-medium text-blue-600 hover:underline dark:text-blue-400"
+              >
+                Sign In
+              </Link>
+            </p>
           </div>
         </div>
-        <div className="mb-4 space-y-1.5">
-          <label
-            htmlFor="email"
-            className="font-sans antialiased text-sm text-stone-800 dark:text-white font-semibold"
-          >
-            Email
-          </label>
-          <div className="relative w-full">
-            <input
-              name="email"
-              placeholder="someone@example.com"
-              type="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full aria-disabled:cursor-not-allowed outline-none focus:outline-none text-stone-800 dark:text-white placeholder:text-stone-600/60 ring-transparent border border-stone-200 transition-all ease-in disabled:opacity-50 disabled:pointer-events-none select-none text-sm py-2 px-2.5 ring shadow-sm bg-white rounded-lg duration-100 hover:border-stone-300 hover:ring-none focus:border-stone-400 focus:ring-none peer"
-              required
-            />
-          </div>
-        </div>
-        <div className="mb-4 space-y-1.5">
-          <label
-            htmlFor="password"
-            className="font-sans antialiased text-sm text-stone-800 dark:text-white font-semibold"
-          >
-            Password
-          </label>
-          <div className="relative w-full">
-            <input
-              name="password"
-              placeholder="************"
-              type="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full aria-disabled:cursor-not-allowed outline-none focus:outline-none text-stone-800 dark:text-white placeholder:text-stone-600/60 ring-transparent border border-stone-200 transition-all ease-in disabled:opacity-50 disabled:pointer-events-none select-none text-sm py-2 px-2.5 ring shadow-sm bg-white rounded-lg duration-100 hover:border-stone-300 hover:ring-none focus:border-stone-400 focus:ring-none peer"
-              required
-            />
-            {passwordError && (
-              <p className="text-red-500 text-sm mt-2">{passwordError}</p>
-            )}
-          </div>
-        </div>
-        <div className="mb-4 space-y-1.5">
-          <label
-            htmlFor="photo"
-            className="font-sans antialiased text-sm text-stone-800 dark:text-white font-semibold"
-          >
-            Photo URL
-          </label>
-          <div className="relative w-full">
-            <input
-              name="photo"
-              placeholder="Photo URL"
-              type="url"
-              value={formData.photo}
-              onChange={handleChange}
-              className="w-full aria-disabled:cursor-not-allowed outline-none focus:outline-none text-stone-800 dark:text-white placeholder:text-stone-600/60 ring-transparent border border-stone-200 transition-all ease-in disabled:opacity-50 disabled:pointer-events-none select-none text-sm py-2 px-2.5 ring shadow-sm bg-white rounded-lg duration-100 hover:border-stone-300 hover:ring-none focus:border-stone-400 focus:ring-none peer"
-            />
-          </div>
-        </div>
-        <button className="inline-flex items-center justify-center border align-middle select-none font-sans font-medium text-center duration-300 ease-in disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed focus:shadow-none text-sm py-2 px-4 shadow-sm hover:shadow-md bg-stone-800 hover:bg-stone-700 relative bg-gradient-to-b from-stone-700 to-stone-800 border-stone-900 text-stone-50 rounded-lg hover:bg-gradient-to-b hover:from-stone-800 hover:to-stone-800 hover:border-stone-900 after:absolute after:inset-0 after:rounded-[inherit] after:box-shadow after:shadow-[inset_0_1px_0px_rgba(255,255,255,0.25),inset_0_-2px_0px_rgba(0,0,0,0.35)] after:pointer-events-none transition antialiased">
-          Sign Up
-        </button>
-      </form>
-      <button
-        onClick={handleGoogleLogin}
-        className="inline-flex items-center justify-center border align-middle select-none font-sans font-medium text-center duration-300 ease-in disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed focus:shadow-none text-sm py-2 px-4 shadow-sm hover:shadow-md relative bg-gradient-to-b from-stone-700 to-stone-800 rounded-lg hover:bg-gradient-to-b hover:from-stone-800 hover:to-stone-800 after:absolute after:inset-0 after:rounded-[inherit] after:box-shadow after:shadow-[inset_0_1px_0px_rgba(255,255,255,0.25),inset_0_-2px_0px_rgba(0,0,0,0.35)] after:pointer-events-none transition antialiased border-[#1877F2] bg-[#1877F2] text-white hover:border-[#1877F2] hover:bg-[#1877F2] hover:brightness-110"
-      >
-        Continue with Google
-      </button>
-      <div className="w-full px-3.5 pt-2 pb-3.5 rounded text-center">
-        <small className="font-sans antialiased text-sm my-1 flex items-center justify-center gap-1 text-stone-600">
-          Already have an account?{" "}
-          <Link
-            to="/login"
-            className="font-sans antialiased text-sm text-stone-500 font-bold"
-          >
-            Sign In
-          </Link>
-        </small>
       </div>
     </div>
   );
