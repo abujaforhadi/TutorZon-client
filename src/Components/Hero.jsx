@@ -31,7 +31,7 @@ const Hero = () => {
                                 <Link
                                     to="/signup"
                                     title="Join for free"
-                                    className="inline-flex items-center px-6 py-4 mt-8 font-semibold text-white transition-all duration-200 bg-yellow-500 rounded-full lg:mt-16 hover:bg-yellow-600 focus:bg-yellow-700"
+                                    className="inline-flex items-center px-6 py-4 mt-8 font-semibold text-white transition-all duration-200 bg-blue-500 rounded-full lg:mt-16 hover:bg-blue-600 focus:bg-blue-700"
                                     role="button"
                                 >
                                     Join for free

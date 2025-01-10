@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { FaUsers, FaChalkboardTeacher, FaStar, FaLanguage } from "react-icons/fa"; 
-import AOS from "aos"; 
+import { FaUsers, FaChalkboardTeacher, FaStar, FaLanguage } from "react-icons/fa";
+import AOS from "aos";
 import "aos/dist/aos.css";
 
 const StatsSection = () => {
@@ -28,9 +28,11 @@ const StatsSection = () => {
         const totalReviews = tutors.reduce((sum, tutor) => sum + (Number(tutor.review) || 0), 0);
         setReviewsCount(totalReviews);
 
-        // Fetch languages
+        // Fetch languages and calculate the count
         const languagesResponse = await axios.get("https://a11server.vercel.app/category");
-        setLanguagesCount(languagesResponse.data.length);
+        const languages = languagesResponse.data || [];
+        console.log("Languages data:", languages); // Debugging log
+        setLanguagesCount(languages.length);
       } catch (error) {
         console.error("Error fetching stats:", error);
       }
@@ -40,7 +42,7 @@ const StatsSection = () => {
   }, []);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-8 py-12 px-4 ">
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-8 py-12 px-4">
       {/* Total Users */}
       <div
         className="bg-white p-8 rounded-lg shadow-lg text-center hover:shadow-xl transition-shadow duration-300"
