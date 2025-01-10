@@ -3,7 +3,6 @@ import { Link, useParams } from "react-router";
 import AOS from "aos";
 import { FaSearch } from "react-icons/fa";
 
-
 const FindTutors = () => {
   const [tutors, setTutors] = useState([]);
   const [filteredTutors, setFilteredTutors] = useState([]);
@@ -20,9 +19,8 @@ const FindTutors = () => {
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data);
         setTutors(data);
-        setFilteredTutors(data); // Initially show all tutors
+        setFilteredTutors(data);
       })
       .catch((error) => console.error("Failed to fetch tutors:", error));
   }, [category]);
@@ -31,18 +29,26 @@ const FindTutors = () => {
     const query = e.target.value.toLowerCase();
     setSearch(query);
 
-    const filtered = tutors.filter((tutor) => {
-      return tutor.language.toLowerCase().includes(query);
-    });
+    const filtered = tutors.filter((tutor) => 
+      tutor.language.toLowerCase().includes(query)
+    );
     setFilteredTutors(filtered);
+  };
+
+  const truncateDescription = (description) => {
+    const words = description.split(" ");
+    return words.length > 10
+      ? `${words.slice(0, 10).join(" ")}...`
+      : description;
   };
 
   return (
     <div className="p-6 max-w-6xl mx-auto">
-      <h2 className="text-2xl font-bold mb-4 text-center">
-        {category ? `${category} Tutors` : "All Tutors"}
+      <h2 className="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-white">
+        {category ? `${category} Tutors` : "Find Your Perfect Tutor"}
       </h2>
 
+      {/* Search Field */}
       <fieldset className="w-full space-y-1 py-1 my-5">
         <label htmlFor="Search" className="hidden">Search</label>
         <div className="relative w-full">
@@ -60,14 +66,13 @@ const FindTutors = () => {
         </div>
       </fieldset>
 
-
       {/* Tutors Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredTutors.length > 0 ? (
           filteredTutors.map((tutor) => (
             <div
               key={tutor._id}
-              className="border p-4 rounded shadow-lg bg-white"
+              className="border p-4 rounded-lg shadow-lg bg-white dark:bg-gray-800 transform hover:scale-105 transition duration-300"
               data-aos="fade-up"
               data-aos-duration="1000"
             >
@@ -79,36 +84,38 @@ const FindTutors = () => {
                   data-aos="zoom-in"
                   data-aos-duration="1500"
                 />
-                <div className="absolute bottom-4 left-4 bg-white bg-opacity-80 p-2 rounded">
-                  <p className="text-sm font-semibold">{tutor.language}</p>
+                <div className="absolute top-4 right-4 bg-blue-500 text-white text-xs px-3 py-1 rounded-full">
+                  {tutor.language}
                 </div>
               </div>
-              <h3 className="text-lg font-semibold" data-aos="fade-up">
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white">
                 {tutor.userName}
               </h3>
-              <h3 className="" data-aos="fade-up">
-                Reviews: {tutor.review}
-              </h3>
-              <p className="text-sm text-gray-600" data-aos="fade-up">
-                {tutor.description}
+              <p className="text-gray-600 dark:text-gray-400 text-sm mt-2">
+                {truncateDescription(tutor.description)}
               </p>
-              <div className="mt-4 flex justify-between items-center">
-                <p className="text-sm text-gray-600">
-                  <span className="font-bold">USD {tutor.price}</span> / hours
+              <div className="flex items-center justify-between mt-4">
+                <p className="text-gray-800 dark:text-gray-300 font-semibold">
+                  <span className="text-blue-600 dark:text-blue-400">USD {tutor.price}</span> / hour
                 </p>
                 <Link
                   to={`/tutor/${tutor._id}`}
-                  className="text-blue-500 hover:underline"
-                  data-aos="fade-up"
-                  data-aos-duration="1000"
+                  className="text-blue-500 hover:underline text-sm"
                 >
                   View Details
                 </Link>
               </div>
+              <div className="mt-4">
+                <span className="text-sm text-gray-600 dark:text-gray-400">
+                  ⭐ {tutor.review} Reviews
+                </span>
+              </div>
             </div>
           ))
         ) : (
-          <p>No tutors found matching your search.</p>
+          <p className="text-center text-gray-600 dark:text-gray-400">
+            No tutors found matching your search.
+          </p>
         )}
       </div>
     </div>
