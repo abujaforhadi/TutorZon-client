@@ -126,7 +126,7 @@ const Contact = () => {
                   <strong>Address:</strong> Bashundhara R/A, Dhaka
                 </li>
                 <li className="text-sm text-gray-800 dark:text-gray-300">
-                  <strong>Email:</strong> support@tutorzon.com
+                  <strong>Email:</strong> support@TutorZen.com
                 </li>
                 <li className="text-sm text-gray-800 dark:text-gray-300">
                   <strong>Phone:</strong> +123 456 7890

@@ -16,7 +16,7 @@ const About = () => {
               Who We Are
             </h3>
             <p className="text-gray-500  mb-4 leading-relaxed">
-              Welcome to <span className="font-bold">TutorZon</span>, your
+              Welcome to <span className="font-bold">TutorZen</span>, your
               trusted platform for connecting students with the best tutors
               worldwide. We are committed to making learning accessible,
               personalized, and efficient for everyone.
