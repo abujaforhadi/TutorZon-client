@@ -1,26 +1,26 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router'; 
+import { Link } from 'react-router';
 import { AuthContext } from '../Auth/AuthProvider';
 
 const Hero = () => {
     const { user } = useContext(AuthContext);
 
     return (
-        <section className=" flex items-center justify-center">
+        <section className="md:mt-2 md:max-h-[60vh] flex items-center justify-center">
             <div className="px-4 mx-auto sm:px-6 lg:px-8">
                 <div className="flex flex-col-reverse md:flex-row items-center gap-12">
                     <div className="text-center md:text-left">
                         <p className="text-base font-semibold tracking-wider text-blue-600 uppercase">
                             A social media for learners
                         </p>
-                        <h1 className="mt-4 text-4xl font-bold   lg:mt-8 sm:text-6xl xl:text-8xl">
+                        <h1 className="mt-4 text-3xl font-bold lg:mt-8 sm:text-5xl xl:text-7xl">
                             Connect & learn from the experts
                         </h1>
-                        <p className="mt-4 text-base  lg:mt-8 sm:text-xl">
+                        <p className="mt-4 text-base lg:mt-8 sm:text-xl">
                             Grow your career fast with the right mentor.
                         </p>
                         {user ? (
-                            <p className="mt-5  ">
+                            <p className="mt-5">
                                 Welcome back, {user?.displayName || user?.email}!{' '}
                                 <Link to="/find-tutors" className="text-blue-600 transition-all duration-200 hover:underline">
                                     Start Your Learning
@@ -51,7 +51,7 @@ const Hero = () => {
                                     </svg>
                                 </Link>
 
-                                <p className="mt-5  ">
+                                <p className="mt-5">
                                     Already joined us?{' '}
                                     <Link to="/login" className="text-blue-600 transition-all duration-200 hover:underline">
                                         Log in
@@ -63,7 +63,7 @@ const Hero = () => {
 
                     <div>
                         <img
-                            className="w-full"
+                            className="w-full md:max-h-[70vh]"
                             src="https://cdn.rareblocks.xyz/collection/celebration/images/hero/1/hero-img.png"
                             alt="Hero Image"
                         />
