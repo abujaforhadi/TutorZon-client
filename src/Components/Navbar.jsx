@@ -30,6 +30,7 @@ const Navbar = () => {
         { name: "My Tutorials", path: "/my-tutorials", authRequired: true },
         { name: "My Booked Tutors", path: "/my-booked-tutors", authRequired: true },
         { name: "Contact", path: "/contact" },
+        { name: "About", path: "/about" },
 
     ];
 

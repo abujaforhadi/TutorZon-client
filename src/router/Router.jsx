@@ -12,6 +12,7 @@ import MyTutorials from "../Pages/MyTutorials";
 import Error from "../Pages/Error";
 import UpdateTutorial from "../Pages/UpdateTutorial";
 import Contact from "../Pages/Contact";
+import About from "../Pages/About";
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ export const router = createBrowserRouter([
       {
         path: '/login',
         element: <Login />,
+      },
+      {
+        path: '/about',
+        element: <About />,
       },
       {
         path: '/contact',
