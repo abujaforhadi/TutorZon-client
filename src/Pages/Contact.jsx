@@ -27,9 +27,9 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12">
+    <div className="min-h-screen   dark:bg-gray-900 py-12">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center text-gray-800 dark:text-white mb-8">
+        <h2 className="text-3xl font-bold text-center  dark:text-white mb-8">
           Get in Touch
         </h2>
 
@@ -105,7 +105,7 @@ const Contact = () => {
           </div>
 
           {/* Contact Info */}
-          <div className="flex flex-col justify-between">
+          <div className="bg-white rounded-lg flex flex-col justify-between">
             <div className="w-full h-64 rounded-lg overflow-hidden shadow-lg">
               <img
                 src="/contactus.svg"
@@ -113,7 +113,7 @@ const Contact = () => {
                 className="w-full h-full object-contain"
               />
             </div>
-            <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 mb-8">
+            <div className=" dark:bg-gray-800 shadow-lg rounded-lg p-6 mb-8">
               <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
                 Contact Information
               </h3>
