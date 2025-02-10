@@ -65,8 +65,8 @@ const Hero = () => {
                     {/* Right Side - Image */}
                     <div className="w-full md:w-1/2 flex justify-center">
                         <img
-                            className="w-full md:max-h-[70vh] object-cover"
-                            src="https://cdn.rareblocks.xyz/collection/celebration/images/hero/1/hero-img.png"
+                            className="w-full "
+                            src="/hero222.svg"
                             alt="Illustration of students learning online"
                         />
                     </div>

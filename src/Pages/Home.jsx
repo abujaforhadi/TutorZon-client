@@ -7,6 +7,7 @@ import Category from '../Components/Category';
 import PricingCards from '../Components/PricingCard';
 import FAQ from '../Components/FAQ';
 import NewsletterForm from '../Components/NewsletterForm';
+import Instructor from '../Components/Instructor';
 
 const Home = () => {
     useEffect(() => {
@@ -18,9 +19,10 @@ const Home = () => {
             <Hero data-aos="fade-up" />
             <StatsSection data-aos="fade-right" />
             <Category data-aos="fade-left" />
+            <Instructor data-aos="fade-up" />
             <PricingCards data-aos="zoom-in" />
             <FAQ data-aos="fade-up"/>
-            <NewsletterForm data-aos="fade-up"/>
+            <NewsletterForm data-aos="fade-down"/>
         </div>
     );
 };

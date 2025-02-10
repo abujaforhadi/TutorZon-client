@@ -150,7 +150,7 @@ const PricingCards = () => {
   };
 
   return (
-    <section className="py-16  dark:bg-gray-900">
+    <section className="pb-16  dark:bg-gray-900">
       <div className="max-w-7xl mx-auto text-center mb-12">
         <h2 className="text-4xl font-bold ">
           Affordable Plans for Everyone
