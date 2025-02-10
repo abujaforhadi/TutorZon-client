@@ -6,6 +6,7 @@ import Hero from '../Components/Hero';
 import Category from '../Components/Category';
 import PricingCards from '../Components/PricingCard';
 import FAQ from '../Components/FAQ';
+import NewsletterForm from '../Components/NewsletterForm';
 
 const Home = () => {
     useEffect(() => {
@@ -19,6 +20,7 @@ const Home = () => {
             <Category data-aos="fade-left" />
             <PricingCards data-aos="zoom-in" />
             <FAQ data-aos="fade-up"/>
+            <NewsletterForm data-aos="fade-up"/>
         </div>
     );
 };
