@@ -6,10 +6,11 @@ const Hero = () => {
     const { user } = useContext(AuthContext);
 
     return (
-        <section className="md:mt-2 md:max-h-[60vh] flex items-center justify-center">
+        <section className="md:mt-10 md:max-h-[60vh] flex items-center justify-center">
             <div className="px-4 mx-auto sm:px-6 lg:px-8">
-                <div className="flex flex-col-reverse md:flex-row items-center gap-12">
-                    <div className="text-center md:text-left">
+                <div className="flex flex-col md:flex-row items-center gap-12">
+                    
+                    <div className="w-full md:w-1/2 text-center md:text-left">
                         <p className="text-base font-semibold tracking-wider text-blue-600 uppercase">
                             A social media for learners
                         </p>
@@ -61,14 +62,16 @@ const Hero = () => {
                         )}
                     </div>
 
-                    <div>
+                    {/* Right Side - Image */}
+                    <div className="w-full md:w-1/2 flex justify-center">
                         <img
-                            className="w-full md:max-h-[70vh]"
+                            className="w-full md:max-h-[70vh] object-cover"
                             src="https://cdn.rareblocks.xyz/collection/celebration/images/hero/1/hero-img.png"
-                            alt="Hero Image"
+                            alt="Illustration of students learning online"
                         />
                     </div>
                 </div>
+
             </div>
         </section>
     );
