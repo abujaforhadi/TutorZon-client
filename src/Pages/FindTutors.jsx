@@ -8,6 +8,7 @@ const FindTutors = () => {
   const [filteredTutors, setFilteredTutors] = useState([]);
   const { category } = useParams();
   const [search, setSearch] = useState("");
+  const [sortOrder, setSortOrder] = useState("asc");
 
   useEffect(() => {
     AOS.init();
@@ -35,6 +36,19 @@ const FindTutors = () => {
     setFilteredTutors(filtered);
   };
 
+  const handleSort = (e) => {
+    const order = e.target.value;
+    setSortOrder(order);
+
+    const sortedTutors = [...filteredTutors].sort((a, b) => {
+      return order === "asc"
+        ? a.language.localeCompare(b.language)
+        : b.language.localeCompare(a.language);
+    });
+
+    setFilteredTutors(sortedTutors);
+  };
+
   const truncateDescription = (description) => {
     const words = description.split(" ");
     return words.length > 10
@@ -44,27 +58,40 @@ const FindTutors = () => {
 
   return (
     <div className="p-6 max-w-6xl mx-auto">
-      <h2 className="text-3xl font-bold mb-6 text-center  dark:text-white">
+      <h2 className="text-3xl font-bold mb-6 text-center dark:text-white">
         {category ? `${category} Tutors` : "Find Your Perfect Tutor"}
       </h2>
 
-      {/* Search Field */}
-      <fieldset className="w-full space-y-1 py-1 my-5">
-        <label htmlFor="Search" className="hidden">Search</label>
-        <div className="relative w-full">
-          <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-            <FaSearch className="text-gray-500 w-5 h-5" />
-          </span>
-          <input
-            type="search"
-            value={search}
-            onChange={handleSearch}
-            name="Search"
-            placeholder="Search by language..."
-            className="w-full py-2 pl-10 pr-4 text-sm rounded-full shadow focus:outline-none bg-gray-100 focus:bg-white focus:ring-2 focus:ring-blue-500 transition duration-200"
-          />
+      {/* Search & Sort */}
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-5">
+        <fieldset className="w-full md:w-1/2 space-y-1 py-1">
+          <label htmlFor="Search" className="hidden">Search</label>
+          <div className="relative w-full">
+            <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+              <FaSearch className="text-gray-500 w-5 h-5" />
+            </span>
+            <input
+              type="search"
+              value={search}
+              onChange={handleSearch}
+              name="Search"
+              placeholder="Search by language..."
+              className="w-full py-2 pl-10 pr-4 text-sm rounded-full shadow focus:outline-none bg-gray-100 focus:bg-white focus:ring-2 focus:ring-blue-500 transition duration-200"
+            />
+          </div>
+        </fieldset>
+
+        <div className="w-full md:w-1/4 mt-3 md:mt-0">
+          <select
+            value={sortOrder}
+            onChange={handleSort}
+            className="w-full py-2 px-3 mt-1 text-sm rounded shadow bg-gray-100 dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+          </select>
         </div>
-      </fieldset>
+      </div>
 
       {/* Tutors Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
