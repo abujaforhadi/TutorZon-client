@@ -61,7 +61,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/tutor/:details',
-        element: <PrivateRouter><TutorDetails /></PrivateRouter>,
+        element: <TutorDetails />,
         loader: ({ params }) => fetch(`https://a11server.vercel.app/tutor/${params.details}`),
       },
       {
